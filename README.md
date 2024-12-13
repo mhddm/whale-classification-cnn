@@ -50,7 +50,7 @@ Humpback-Whale-Classification/
 2. **Conda**
 3. Basic knowledge of Python and Deep Learning
 
-### TODO
+## TODO
 ### Installation:
 1. Clone the repository:
    ```bash
@@ -71,7 +71,7 @@ Humpback-Whale-Classification/
 
 ---
 
-#TODO
+##TODO
 ## Usage
 
 ### Data Extraction
