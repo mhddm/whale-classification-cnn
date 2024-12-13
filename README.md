@@ -71,7 +71,7 @@ Humpback-Whale-Classification/
 
 ---
 
-##TODO
+## TODO
 ## Usage
 
 ### Data Extraction
