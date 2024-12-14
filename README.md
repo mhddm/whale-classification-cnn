@@ -10,10 +10,11 @@ This repository contains a deep learning project designed to classify whale soun
 ```
 Humpback-Whale-Classification/
 ├── data_extraction/
-│   ├── extract_data.py
-│   ├── config_file.py
+│   ├── extract_labels.py
+│   ├── config.py
 ├── data_preprocessing/
-│   ├── preprocess_data.py
+│   ├── generate_melspectrograms.py
+|   ├── config.py
 ├── model/
 │   ├── train_model.py
 │   ├── evaluate_model.py
