@@ -3,7 +3,11 @@ import os
 import shutil
 import pandas as pd
 from config import Config
+import logging
 
+
+# Configure logging
+logging.basicConfig(level=Config.LOG_LEVEL, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Ensure necessary directories exist
 os.makedirs(Config.ORGANISED_DATA_DIR, exist_ok=True)
@@ -14,9 +18,10 @@ def load_labels(file_path):
     """Load and return the labels from the excel file (in DataFrame data structure)."""
     try:
         labels_df = pd.read_excel(file_path)
+        logging.info("Labels file loaded successfully.")
         return labels_df
     except Exception as e:
-        print(f"Error loading labels file: {e}")
+        logging.error(f"Error loading labels file: {e}")
         return None
 
 
@@ -41,23 +46,27 @@ def organise_audio_files(labels_df):
             # Copy the file to the corresponding directory
             try:
                 if os.path.exists(audio_path):
-                    shutil.copy2(audio_path, target_path)                           # Copy the file
-                    total_files_copied += 1
-                    print(f"Copied {audio_path} to {target_path}")
+                    if not os.path.exists(target_path):                             # Avoid redudant copying
+                        shutil.copy2(audio_path, target_path)                       # Copy the file
+                        total_files_copied += 1
+                        logging.info(f"Copied {audio_path} to {target_path}")
+                    else: 
+                        logging.info(f"File already exists: {target_path}")
                 else:
-                    print(f"File not found: {audio_path}")
+                    logging.warning(f"Source file not found: {audio_path}")
             except Exception as e:
-                print(f"Error organizing file {audio_path}: {e}")
+                logging.error(f"Error organising file {audio_path}: {e}")
                 
-    print(f"Total files copied: {total_files_copied}")
+    logging.info(f"Total files copied: {total_files_copied}")
+    return total_files_copied
 
 
 # Main execution
 if __name__ == "__main__":
     labels_df = load_labels(Config.LABELS_FILE)
     if labels_df is not None:
-        print("Labels loaded successfully.")
-        organise_audio_files(labels_df)
-        print("Data extraction completed: Files organized by labels.")
+        logging.info("Labels loaded successfully.")
+        total_files_copied = organise_audio_files(labels_df)
+        logging.info(f"Data extraction completed: {total_files_copied} files organised by labels.")
     else:
-        print("Failed to load labels.")
+        logging.error("Failed to load labels.")
