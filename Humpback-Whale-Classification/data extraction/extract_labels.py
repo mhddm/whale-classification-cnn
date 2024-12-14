@@ -49,7 +49,7 @@ def organise_audio_files(labels_df):
     In my excel sheet, some files may have more than 1 label. Files with multiple labels will be copied into each respective folder.
     
     Args: 
-        labels_df: DataFrame containing file paths and labels.
+        labels_df (pd.DataFrame): DataFrame containing file paths and labels.
     
     Returns:
         int: Total number of files successfully copied.
