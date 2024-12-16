@@ -12,6 +12,7 @@ logging.basicConfig(level=Config.LOG_LEVEL, format='%(asctime)s - %(levelname)s 
 # Ensure necessary directories exist
 os.makedirs(Config.ORGANISED_DATA_DIR, exist_ok=True)
 
+# Exit if critical paths are invalid
 if not os.path.isdir(Config.RAW_DATA_DIR):
     logging.error(f"Raw data directory not found: {Config.RAW_DATA_DIR}")
     exit(1)
@@ -21,13 +22,13 @@ if not os.path.isfile(Config.LABELS_FILE):
     exit(1)
 
 
-# Load labels from excel file
+# Load labels from Excel file
 def load_labels(file_path):
     """
-    Load and return the labels from the excel file.
+    Load and return the labels from the Excel file.
     
     Args: 
-        file_path (str): Path to the excel file containing filename and labels.
+        file_path (str): Path to the Excel file containing filename and labels.
         
     Returns: 
         pd.DataFrame: DataFrame containing the labels if loaded successfully; otherwise, None.
@@ -56,7 +57,7 @@ def organise_audio_files(labels_df):
         None: If the DataFrame is missing required columns ('Labels' or 'FileName').
     """
     
-    if 'Labels' not in labels_df.columns or 'FileName' not in labels_df.columns:        # Data integrity check
+    if 'Labels' not in labels_df.columns or 'FileName' not in labels_df.columns:
         logging.error("Missing required columns in labels file.")
         return None
     
@@ -66,11 +67,11 @@ def organise_audio_files(labels_df):
     for index, row in labels_df.iterrows():
         # Extract just the filename from the full path in the Excel sheet
         total_files_read += 1
-        audio_path = row['FileName']                                                # Full path as given in Excel
+        audio_path = row['FileName']                                                
         filename = os.path.basename(audio_path)                                     # Extract filename only
 
         # Build the source path dynamically
-        labels = [label.strip() for label in row['Labels'].split(',')]              # Removes trailing/leading whitespaces and split labels by ',' for multi-labels. Returns a list
+        labels = [label.strip() for label in row['Labels'].split(',')]              # Removes trailing/leading whitespaces and split labels by ',' for multi-labels.
 
         for label in labels:
             # Create a folder for each label
@@ -84,7 +85,7 @@ def organise_audio_files(labels_df):
                 target_exists = os.path.exists(target_path)
                 
                 if source_exists and not target_exists:                             # Avoid redudant copying                            
-                    shutil.copy2(audio_path, target_path)                           # Copy the file
+                    shutil.copy2(audio_path, target_path)                           
                     total_files_copied += 1
                     logging.info(f"Copied {audio_path} to {target_path}")
                 else: 
