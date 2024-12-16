@@ -46,7 +46,7 @@ def load_labels(file_path):
 # Organise audio files by labels
 def organise_audio_files(labels_df):
     """
-    Organise audio files into subfolders based on their labels. 
+    Organise audio files into sub-folders based on their labels. 
     In my excel sheet, some files may have more than 1 label. Files with multiple labels will be copied into each respective folder.
     
     Args: 
@@ -84,7 +84,7 @@ def organise_audio_files(labels_df):
                 source_exists = os.path.exists(audio_path)
                 target_exists = os.path.exists(target_path)
                 
-                if source_exists and not target_exists:                             # Avoid redudant copying                            
+                if source_exists and not target_exists:                             # Avoid redundant copying                            
                     shutil.copy2(audio_path, target_path)                           
                     total_files_copied += 1
                     logging.info(f"Copied {audio_path} to {target_path}")
