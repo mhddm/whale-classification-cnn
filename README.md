@@ -1,4 +1,4 @@
-# Convolutional Neural Network for Whale Sound Classification
+# Convolutional Neural Network for Whale Sound Classification (incomplete project)
 
 This repository contains a deep learning project designed to classify whale sounds using Convolutional Neural Networks (CNNs). The project involves creating five binary CNN models to classify five different whale species—humpback, fin, minke, omura, and downchirps from an unrecognized whale species—and a multi-class CNN model to classify all five species in a single framework.
 
